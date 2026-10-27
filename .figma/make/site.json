@@ -1,0 +1,10 @@
+{
+  "description": "Explore annual registered household trends by province and compare the latest household counts across provinces with clear line and bar charts.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
