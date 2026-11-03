@@ -7,6 +7,10 @@ const compact = new Intl.NumberFormat('ko-KR', {
   maximumFractionDigits: 1,
 })
 
+const sensorTimes = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00']
+const temperatures = [21.2, 20.8, 20.4, 20.7, 22.1, 23.4, 24.3, 25.1, 24.8, 23.9, 23.1, 22.6]
+const humidity = [48, 50, 52, 53, 51, 48, 45, 43, 44, 47, 49, 51]
+
 function LineChart({ values }: { values: readonly (number | null)[] }) {
   const points = values
     .map((value, index) => ({ value, index }))
@@ -77,7 +81,102 @@ function RankingChart({ selected }: { selected: string }) {
   )
 }
 
+function SensorChart() {
+  const x = (index: number) => 52 + (index / (sensorTimes.length - 1)) * 828
+  const yTemp = (value: number) => 250 - ((value - 19) / 8) * 190
+  const yHumidity = (value: number) => 250 - ((value - 35) / 25) * 190
+  const path = (values: number[], y: (value: number) => number) =>
+    values.map((value, index) => `${index ? 'L' : 'M'} ${x(index)} ${y(value)}`).join(' ')
+
+  return (
+    <div className="chart-scroll sensor-chart">
+      <svg viewBox="0 0 920 320" role="img" aria-label="24시간 온도와 습도 변화 선 그래프">
+        {[60, 155, 250].map((position, index) => (
+          <g key={position}>
+            <line x1="52" x2="880" y1={position} y2={position} className="grid-line" />
+            <text x="42" y={position + 4} textAnchor="end" className="axis-label">
+              {index === 0 ? '높음' : index === 1 ? '보통' : '낮음'}
+            </text>
+          </g>
+        ))}
+        <path d={path(temperatures, yTemp)} className="sensor-line temperature-line" />
+        <path d={path(humidity, yHumidity)} className="sensor-line humidity-line" />
+        {temperatures.map((value, index) => (
+          <g key={sensorTimes[index]}>
+            <circle cx={x(index)} cy={yTemp(value)} r="4" className="sensor-point temperature-point">
+              <title>{`${sensorTimes[index]} · ${value.toFixed(1)}°C`}</title>
+            </circle>
+            <circle cx={x(index)} cy={yHumidity(humidity[index])} r="4" className="sensor-point humidity-point">
+              <title>{`${sensorTimes[index]} · 습도 ${humidity[index]}%`}</title>
+            </circle>
+            <text x={x(index)} y="286" textAnchor="middle" className="axis-label">{sensorTimes[index]}</text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  )
+}
+
+function SensorDashboard() {
+  return (
+    <>
+      <section className="sensor-dashboard">
+        <div className="sensor-summary">
+          <article className="sensor-card temperature-card">
+            <div className="sensor-card-top">
+              <span className="sensor-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M14 14.76V5a4 4 0 0 0-8 0v9.76a6 6 0 1 0 8 0ZM10 4a1 1 0 0 1 1 1v11.35a3 3 0 1 1-2 0V5a1 1 0 0 1 1-1Z" /></svg>
+              </span>
+              <span className="live-status"><i /> 정상</span>
+            </div>
+            <p>현재 온도</p>
+            <div className="sensor-value">23.4<small>°C</small></div>
+            <div className="sensor-delta">지난 1시간 대비 <strong>+0.6°C</strong></div>
+          </article>
+          <article className="sensor-card humidity-card">
+            <div className="sensor-card-top">
+              <span className="sensor-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 2S5 10.18 5 15a7 7 0 0 0 14 0c0-4.82-7-13-7-13Zm0 17a4 4 0 0 1-4-4c0-2.18 2.36-5.75 4-7.92 1.64 2.17 4 5.74 4 7.92a4 4 0 0 1-4 4Z" /></svg>
+              </span>
+              <span className="live-status"><i /> 정상</span>
+            </div>
+            <p>현재 습도</p>
+            <div className="sensor-value">48<small>%</small></div>
+            <div className="sensor-delta">지난 1시간 대비 <strong>−2%</strong></div>
+          </article>
+          <article className="sensor-info-card">
+            <p className="kicker">SENSOR STATUS</p>
+            <h2>회의실 A</h2>
+            <dl>
+              <div><dt>마지막 업데이트</dt><dd>방금 전</dd></div>
+              <div><dt>쾌적도</dt><dd className="comfort">쾌적</dd></div>
+              <div><dt>센서 ID</dt><dd>TH-001</dd></div>
+            </dl>
+          </article>
+        </div>
+
+        <article className="card sensor-history">
+          <div className="card-heading">
+            <div>
+              <p className="kicker">24시간 모니터링</p>
+              <h2>온도 · 습도 변화</h2>
+            </div>
+            <div className="chart-legend">
+              <span><i className="temp-dot" /> 온도</span>
+              <span><i className="humid-dot" /> 습도</span>
+            </div>
+          </div>
+          <SensorChart />
+          <p className="chart-note">예시 데이터입니다. 실제 센서 연결 후 실시간 값으로 업데이트됩니다.</p>
+        </article>
+      </section>
+      <footer>센서 데이터 · 예시 값 · 마지막 업데이트: 방금 전</footer>
+    </>
+  )
+}
+
 export default function App() {
+  const [view, setView] = useState<'household' | 'sensor'>('household')
   const [selected, setSelected] = useState('서울특별시')
   const province = provinces.find((item) => item.name === selected) ?? provinces[0]
   const latest = province.values.at(-1) ?? 0
@@ -86,18 +185,26 @@ export default function App() {
 
   return (
     <main>
-      <header className="hero">
-        <div className="eyebrow"><span />KOSIS DATA EXPLORER</div>
+      <header className={`hero ${view === 'sensor' ? 'sensor-hero' : ''}`}>
+        <div className="topbar">
+          <div className="eyebrow"><span />DATA MONITOR</div>
+          <nav aria-label="대시보드 전환">
+            <button className={view === 'household' ? 'active' : ''} onClick={() => setView('household')}>인구 데이터</button>
+            <button className={view === 'sensor' ? 'active' : ''} onClick={() => setView('sensor')}>온습도 센서</button>
+          </nav>
+        </div>
         <div className="hero-row">
           <div>
-            <h1>대한민국 세대의 변화</h1>
-            <p>행정구역별 주민등록세대수로 살펴보는 2016–2026 지역 변화</p>
+            <h1>{view === 'household' ? '대한민국 세대의 변화' : '공간의 상태를 한눈에'}</h1>
+            <p>{view === 'household' ? '행정구역별 주민등록세대수로 살펴보는 2016–2026 지역 변화' : '실내 온도와 습도의 현재 상태와 시간대별 변화를 확인하세요'}</p>
           </div>
-          <div className="source-badge">통계청 원자료<br /><strong>2026.09 기준</strong></div>
+          <div className="source-badge">
+            {view === 'household' ? <>통계청 원자료<br /><strong>2026.09 기준</strong></> : <>센서 연결 상태<br /><strong className="connected">● 온라인</strong></>}
+          </div>
         </div>
       </header>
 
-      <section className="dashboard">
+      {view === 'sensor' ? <SensorDashboard /> : <><section className="dashboard">
         <article className="card trend-card">
           <div className="card-heading">
             <div>
@@ -133,8 +240,7 @@ export default function App() {
           <RankingChart selected={selected} />
         </article>
       </section>
-
-      <footer>자료: 통계청 「행정구역(시군구)별 주민등록세대수」 · 단위: 세대</footer>
+      <footer>자료: 통계청 「행정구역(시군구)별 주민등록세대수」 · 단위: 세대</footer></>}
     </main>
   )
 }

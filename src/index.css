@@ -20,10 +20,10 @@ main { min-height: 100vh; }
     linear-gradient(120deg, #101d3c 0%, #17305b 58%, #114d62 100%);
 }
 
-.hero-row, .dashboard, footer { max-width: 1400px; margin-inline: auto; }
+.hero-row, .dashboard, .sensor-dashboard, footer { max-width: 1400px; margin-inline: auto; }
+.topbar { max-width: 1400px; margin: 0 auto 32px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
 .eyebrow {
-  max-width: 1400px;
-  margin: 0 auto 32px;
+  margin: 0;
   color: #9bd8e0;
   font: 700 12px/1 'DM Sans', sans-serif;
   letter-spacing: .16em;
@@ -31,6 +31,10 @@ main { min-height: 100vh; }
   align-items: center;
   gap: 9px;
 }
+.topbar nav { display: flex; gap: 4px; padding: 4px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; }
+.topbar button { border: 0; border-radius: 7px; padding: 8px 14px; color: #aebdd1; background: transparent; font-size: 12px; font-weight: 600; cursor: pointer; }
+.topbar button:hover { color: white; }
+.topbar button.active { color: #18314d; background: white; box-shadow: 0 4px 12px rgba(0,0,0,.14); }
 .eyebrow span { width: 7px; height: 7px; border-radius: 50%; background: #46c6d6; box-shadow: 0 0 0 5px rgba(70,198,214,.14); }
 .hero-row { display: flex; align-items: end; justify-content: space-between; gap: 32px; }
 h1, h2, p { margin: 0; }
@@ -38,6 +42,8 @@ h1 { font-size: clamp(34px, 4vw, 58px); line-height: 1.15; letter-spacing: -.045
 .hero p { margin-top: 16px; color: #bdc8da; font-size: 16px; }
 .source-badge { flex: none; border-left: 1px solid rgba(255,255,255,.28); padding-left: 22px; color: #aebdd1; font-size: 12px; line-height: 1.8; }
 .source-badge strong { color: white; font: 600 15px 'DM Sans', sans-serif; }
+.source-badge .connected { color: #8de1b2; font-size: 13px; }
+.sensor-hero { background: radial-gradient(circle at 78% 10%, rgba(73, 154, 209, .3), transparent 27%), linear-gradient(120deg, #101d3c 0%, #18395b 55%, #18585e 100%); }
 
 .dashboard { margin-top: -50px; padding: 0 max(3vw, 18px) 40px; display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(360px, .85fr); gap: 20px; align-items: start; }
 .card { background: white; border: 1px solid #e1e7ef; border-radius: 18px; box-shadow: 0 14px 35px rgba(25, 39, 71, .08); padding: 30px; }
@@ -77,9 +83,49 @@ select:focus { border-color: #1591a4; box-shadow: 0 0 0 3px rgba(21,145,164,.13)
 .rank-value { text-align: right; color: #47546a; font: 600 10px 'DM Sans', sans-serif; }
 footer { padding: 0 max(3vw, 18px) 34px; color: #7f8998; font-size: 10px; }
 
+.sensor-dashboard { margin-top: -50px; padding: 0 max(3vw, 18px) 40px; }
+.sensor-summary { display: grid; grid-template-columns: 1fr 1fr .78fr; gap: 20px; margin-bottom: 20px; }
+.sensor-card, .sensor-info-card { min-height: 248px; background: white; border: 1px solid #e1e7ef; border-radius: 18px; box-shadow: 0 14px 35px rgba(25,39,71,.08); padding: 28px; }
+.sensor-card { position: relative; overflow: hidden; }
+.sensor-card::after { content: ''; position: absolute; right: -36px; bottom: -50px; width: 170px; height: 170px; border-radius: 50%; opacity: .55; }
+.temperature-card::after { background: #fff0e6; }
+.humidity-card::after { background: #e7f5fb; }
+.sensor-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.sensor-icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; }
+.sensor-icon svg { width: 22px; height: 22px; fill: currentColor; }
+.temperature-card .sensor-icon { color: #df7243; background: #fff0e9; }
+.humidity-card .sensor-icon { color: #258da7; background: #e7f5f8; }
+.live-status { color: #4c8668; background: #eaf7ef; border-radius: 18px; padding: 5px 9px; font-size: 10px; font-weight: 700; }
+.live-status i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #48a874; margin-right: 4px; }
+.sensor-card > p { color: #718097; font-size: 12px; font-weight: 600; }
+.sensor-value { position: relative; z-index: 1; margin: 2px 0 12px; color: #17223b; font: 700 clamp(48px, 5vw, 68px) 'DM Sans', sans-serif; letter-spacing: -.055em; }
+.sensor-value small { font-size: .42em; color: #647187; margin-left: 5px; }
+.sensor-delta { position: relative; z-index: 1; color: #8a95a6; font-size: 11px; }
+.sensor-delta strong { color: #47566c; }
+.sensor-info-card h2 { margin-bottom: 24px; }
+.sensor-info-card dl { margin: 0; display: grid; gap: 15px; }
+.sensor-info-card dl div { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #edf1f5; padding-bottom: 12px; }
+.sensor-info-card dt { color: #8994a5; font-size: 11px; }
+.sensor-info-card dd { margin: 0; color: #354259; font: 600 12px 'DM Sans', 'Noto Sans KR', sans-serif; }
+.sensor-info-card dd.comfort { color: #288458; background: #e8f6ed; border-radius: 15px; padding: 4px 9px; }
+.sensor-history { padding-bottom: 22px; }
+.chart-legend { display: flex; gap: 16px; color: #66748a; font-size: 11px; font-weight: 600; }
+.chart-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+.temp-dot { background: #e5794d; }
+.humid-dot { background: #278ea8; }
+.sensor-chart { margin-top: 8px; }
+.sensor-line { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.temperature-line { stroke: #e5794d; }
+.humidity-line { stroke: #278ea8; }
+.sensor-point { fill: white; stroke-width: 3; cursor: crosshair; }
+.temperature-point { stroke: #e5794d; }
+.humidity-point { stroke: #278ea8; }
+
 @media (max-width: 900px) {
   .dashboard { grid-template-columns: 1fr; }
   .rank-card { max-width: none; }
+  .sensor-summary { grid-template-columns: 1fr 1fr; }
+  .sensor-info-card { grid-column: 1 / -1; min-height: auto; }
 }
 @media (max-width: 560px) {
   .hero { padding-top: 34px; padding-bottom: 78px; }
@@ -90,4 +136,10 @@ footer { padding: 0 max(3vw, 18px) 34px; color: #7f8998; font-size: 10px; }
   h2 { font-size: 19px; }
   select { min-width: 138px; max-width: 148px; }
   .metric-row { gap: 24px; }
+  .topbar { align-items: flex-start; }
+  .topbar nav { flex-direction: column; }
+  .topbar button { padding: 7px 10px; }
+  .sensor-summary { grid-template-columns: 1fr; }
+  .sensor-info-card { grid-column: auto; }
+  .sensor-card, .sensor-info-card { min-height: 220px; padding: 22px; border-radius: 14px; }
 }
