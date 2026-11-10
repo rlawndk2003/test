@@ -7,7 +7,7 @@
 - `<main>` 최대 폭 1120px 가운데. 여백 모바일 위아래 space-8, 좌우 space-4 / 웹(768px 이상) 위아래 space-12, 좌우 space-8
 - 배치 순서:
   1. ProductHeader: 맨 위, 왼쪽 정렬, 전체 폭
-  2. SensorMoon: 전체 폭, 화면 정가운데 (min-height 70vh)
+  2. SensorSprout: 전체 폭, 화면 정가운데 (min-height 70vh)
   3. 컨트롤(ConnectionControl, PowerToggle 두 행, 행 사이 space-6)
   4. SensorChart
 - 모바일: 1열, 섹션 사이 space-8

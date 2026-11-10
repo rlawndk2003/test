@@ -10,7 +10,7 @@ src/
   product.ts        // PRODUCT 슬롯 + DEVICE_ID + SENSOR_MIN/MAX
   lib/supabase.ts   // createClient
   lib/device.ts     // connectSensor, disconnectSensor, setLedPower, loadPower
-  components/       // ProductHeader, ConnectionControl, PowerToggle, SensorMoon, SensorChart
+  components/       // ProductHeader, ConnectionControl, PowerToggle, SensorSprout, SensorChart
   App.tsx           // AppShell + state
 styles/globals.css  // styles.md 내용
 ```

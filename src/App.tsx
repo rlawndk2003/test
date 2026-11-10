@@ -3,7 +3,7 @@ import ConnectionControl from "./components/ConnectionControl"
 import PowerToggle from "./components/PowerToggle"
 import ProductHeader from "./components/ProductHeader"
 import SensorChart from "./components/SensorChart"
-import SensorMoon from "./components/SensorMoon"
+import SensorSprout from "./components/SensorSprout"
 import {
   connectSensor,
   disconnectSensor,
@@ -51,7 +51,7 @@ export default function App() {
   return (
     <main className="app-shell">
       <ProductHeader />
-      <SensorMoon value={latestValue} power={power} />
+      <SensorSprout value={latestValue} />
       <div className="dashboard-grid">
         <section className="controls" aria-label="조명 제어">
           <ConnectionControl status={status} onToggle={handleConnect} />

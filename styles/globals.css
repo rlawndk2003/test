@@ -9,7 +9,6 @@
   --ink-muted: #9a9ea7;
   --line: #2a2d33;
   --off: #5d6169;
-  --moon-glow: #9db8ff;
   --status-on: #4cc38a;
   --danger: #f97066;
 
@@ -30,18 +29,58 @@ button { border: 0; border-radius: 0; }
 .t-caption { font-size: 12px; font-weight: 400; }
 @media (max-width: 767px) { .t-display { font-size: 24px; } }
 
-/* 센서 달 */
-.moon { --level: 0; width: min(72vw, 360px); aspect-ratio: 1; margin: 0 auto; animation: moon-float 6s ease-in-out infinite alternate; }
-.moon img { display: block; width: 100%; height: 100%; object-fit: contain;
-  filter: brightness(calc(0.25 + 0.75 * var(--level))) drop-shadow(0 0 calc(var(--level) * 48px) var(--moon-glow));
-  transition: filter .4s; }
-.moon[data-power="off"] img { filter: brightness(0.12) grayscale(1); }
-@keyframes moon-float { from { transform: translateY(0); } to { transform: translateY(-10px); } }
-@media (prefers-reduced-motion: reduce) { .moon { animation: none; } }
+/* 센서 새싹 */
+.sprout {
+  --sprout-opacity: 0.3;
+  --sprout-scale: 0.35;
+  width: min(72vw, 360px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  color: var(--ink);
+  transition: opacity 400ms;
+}
 
-.moon img {
-  filter: brightness(var(--moon-brightness))
-    drop-shadow(0 0 var(--moon-glow-size) var(--moon-glow));
+.sprout svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.sprout-stem {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transform: scaleY(var(--sprout-scale));
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  transition: transform 700ms ease;
+}
+
+.sprout-leaf {
+  fill: currentColor;
+  opacity: var(--sprout-opacity);
+  transform-box: fill-box;
+  transition: opacity 500ms, transform 700ms ease;
+}
+
+.sprout-leaf-left {
+  transform: scale(var(--sprout-scale)) rotate(-8deg);
+  transform-origin: right bottom;
+}
+
+.sprout-leaf-right {
+  transform: scale(var(--sprout-scale)) rotate(8deg);
+  transform-origin: left bottom;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sprout,
+  .sprout-stem,
+  .sprout-leaf {
+    transition: none;
+  }
 }
 
 .app-shell {
@@ -80,7 +119,7 @@ button { border: 0; border-radius: 0; }
   margin-top: var(--space-2);
 }
 
-.moon-section {
+.sprout-section {
   min-height: 70vh;
   display: flex;
   flex-direction: column;
