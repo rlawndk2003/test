@@ -22,17 +22,18 @@
 4. Supabase 키는 anon(publishable) 키만. service_role 키는 코드에 넣지 않는다.
 5. 바탕은 검은색 한 테마. 텍스트 대비 4.5:1 이상.
 
-## 제품 슬롯 (학생이 채우는 칸)
+## 제품 슬롯
 
-제품 이름, 컨셉, 설명은 `src/product.ts`의 `PRODUCT` 객체 한 곳에서만 정의하고 화면은 거기서 읽는다. 비어 있으면 `[제품 이름]` 같은 자리표시를 `--ink-muted`로 보여준다.
+제품 이름, 컨셉, 설명은 `src/product.ts`의 `PRODUCT` 객체 한 곳에서만 정의하고 화면은 거기서 읽는다.
 
 | 슬롯 | 위치 |
 | --- | --- |
-| 제품 이름 | `PRODUCT.name` |
-| 제품 컨셉 (한 줄) | `PRODUCT.concept` |
-| 제품 설명 (2~3문장) | `PRODUCT.description` |
-| 메인 컬러 | globals.css의 `--brand`, `--on-brand`. 기본값 블루 |
-| 폰트 | globals.css의 `--font-sans`(메인, 기본값 Pretendard), `--font-display`(서브, 기본값 Rising CHAI). 서브는 제품 이름과 센서값 숫자에만 |
+| 제품 이름 | `PRODUCT.name`: `Florux` |
+| 제품 컨셉 | `PRODUCT.concept`: `식물이 물을 머금고 꽃을 피우듯, 정성 어린 손길 끝에서 빛이 피어납니다.` |
+| 제품 설명 | `PRODUCT.description`: `우리는 스위치 하나로 너무나 쉽게 빛을 얻는 세상에 살고 있습니다. 하지만 이 화분은 누군가 관심과 정성을 담아 '물을 주는 행위'를 건네야만 비로소 빛을 밝혀줍니다. 화분에 물을 뿌리는 순간, 온습도 센서가 수분을 감지하고 메말라 있던 오브제에 따뜻한 빛을 채워 넣습니다. 식물을 돌보듯 정성을 쏟는 일상 속의 작은 액션(Action)이, 차가웠던 공간에 따스한 리액션(Reaction)으로 돌아오는 교감의 경험을 표현하고자 합니다.` |
+| 메인 컬러 | 검정색 `#000000` |
+| 글자색 | 흰색 `#ffffff` |
+| 폰트 | SUITE. `--font-sans`와 `--font-display`에 적용 |
 
 ## 기능
 
