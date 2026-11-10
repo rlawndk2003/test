@@ -1,10 +1,13 @@
 @import "tailwindcss";
 
-@layer base {
-  * {
-    box-sizing: border-box;
-  }
+@theme {
+  --font-sans: SUITE, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Noto Sans KR", sans-serif;
+  --font-display: SUITE, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
 
+@layer base {
   html {
     min-width: 320px;
     background: var(--surface);
@@ -15,7 +18,4 @@
     margin: 0;
   }
 
-  button {
-    font: inherit;
-  }
 }
