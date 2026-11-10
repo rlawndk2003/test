@@ -49,6 +49,11 @@ button { border: 0; border-radius: 0; }
 @keyframes moon-float { from { transform: translateY(0); } to { transform: translateY(-10px); } }
 @media (prefers-reduced-motion: reduce) { .moon { animation: none; } }
 
+.moon img {
+  filter: brightness(var(--moon-brightness))
+    drop-shadow(0 0 var(--moon-glow-size) var(--moon-glow));
+}
+
 .app-shell {
   width: 100%;
   max-width: 1120px;

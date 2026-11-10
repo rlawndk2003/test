@@ -7,7 +7,7 @@ export type Status = "disconnected" | "connecting" | "connected" | "error"
 
 let channel: RealtimeChannel | null = null
 let demoTimer: ReturnType<typeof setInterval> | null = null
-let demoPower = false
+let demoPower = true
 
 export async function connectSensor(opts: {
   onInit: (rows: Reading[]) => void
