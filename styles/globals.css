@@ -31,13 +31,13 @@ button { border: 0; border-radius: 0; }
 
 /* 센서 새싹 */
 .sprout {
-  --sprout-opacity: 0.3;
-  --sprout-scale: 0.35;
+  --sprout-opacity: 0.15;
   width: min(72vw, 360px);
   aspect-ratio: 1;
   margin: 0 auto;
   color: var(--ink);
-  transition: opacity 400ms;
+  opacity: var(--sprout-opacity);
+  transition: opacity 500ms;
 }
 
 .sprout svg {
@@ -52,33 +52,14 @@ button { border: 0; border-radius: 0; }
   stroke: currentColor;
   stroke-width: 10;
   stroke-linecap: round;
-  transform: scaleY(var(--sprout-scale));
-  transform-box: fill-box;
-  transform-origin: center bottom;
-  transition: transform 700ms ease;
 }
 
 .sprout-leaf {
   fill: currentColor;
-  opacity: var(--sprout-opacity);
-  transform-box: fill-box;
-  transition: opacity 500ms, transform 700ms ease;
-}
-
-.sprout-leaf-left {
-  transform: scale(var(--sprout-scale)) rotate(-8deg);
-  transform-origin: right bottom;
-}
-
-.sprout-leaf-right {
-  transform: scale(var(--sprout-scale)) rotate(8deg);
-  transform-origin: left bottom;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sprout,
-  .sprout-stem,
-  .sprout-leaf {
+  .sprout {
     transition: none;
   }
 }

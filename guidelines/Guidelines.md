@@ -1,6 +1,6 @@
 # IoT 조명 웹앱 기본 프레임
 
-센서값에 반응하는 조명 제품의 웹, 스마트폰 화면이다. 검은 바탕 정가운데에 센서값과 연동되어 자라는 새싹이 있다. 데이터 흐름: 센서 → ESP32 → Supabase → 이 웹앱.
+센서값에 반응하는 조명 제품의 웹, 스마트폰 화면이다. 검은 바탕 정가운데에 센서값과 연동되어 선명도가 바뀌는 새싹이 있다. 센서값이 높을수록 새싹이 선명해지고, 낮을수록 투명해져 흐릿해진다. 데이터 흐름: 센서 → ESP32 → Supabase → 이 웹앱.
 이 문서 하나에 모든 규칙이 있다. 아래 Setup, Tokens, styles, 컴포넌트 섹션을 모두 따른다.
 
 ## 반드시 지킬 시각 규칙
@@ -39,7 +39,7 @@
 
 | 기능 | 컴포넌트 | 데이터 |
 | --- | --- | --- |
-| 센서값에 따라 자라는 새싹 (검은 바탕 정가운데) | SensorSprout | 최신 `sensor_readings.value` |
+| 센서값이 높을수록 선명하고 낮을수록 투명해지는 새싹 (검은 바탕 정가운데) | SensorSprout | 최신 `sensor_readings.value` |
 | 센서값 플롯 | SensorChart | 최근 60개 + realtime INSERT |
 | LED 전원 on/off | PowerToggle | `device_state.led_on` 업데이트 |
 | 센서 연결, 끊기 | ConnectionControl | realtime 채널 구독, 해제 |

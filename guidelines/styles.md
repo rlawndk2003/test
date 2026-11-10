@@ -49,6 +49,6 @@ button { border: 0; border-radius: 0; }
 @media (max-width: 767px) { .t-display { font-size: 24px; } }
 
 /* 센서 새싹 */
-.sprout { width: min(72vw, 360px); aspect-ratio: 1; margin: 0 auto; color: var(--ink); }
+.sprout { --sprout-opacity: 0.15; width: min(72vw, 360px); aspect-ratio: 1; margin: 0 auto; color: var(--ink); opacity: var(--sprout-opacity); transition: opacity 500ms; }
 .sprout svg { display: block; width: 100%; height: 100%; overflow: visible; }
 ```

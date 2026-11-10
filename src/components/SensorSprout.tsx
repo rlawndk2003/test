@@ -3,7 +3,6 @@ import { SENSOR_MAX, SENSOR_MIN } from "../product"
 
 type LevelStyle = CSSProperties & {
   "--sprout-opacity": number
-  "--sprout-scale": number
 }
 
 export default function SensorSprout({ value }: { value?: number }) {
@@ -14,7 +13,7 @@ export default function SensorSprout({ value }: { value?: number }) {
           1,
           Math.max(0, (value - SENSOR_MIN) / (SENSOR_MAX - SENSOR_MIN)),
         )
-  const growth = Math.round(level * 100)
+  const clarity = Math.round(level * 100)
 
   return (
     <section className="sprout-section" aria-label="새싹 상태">
@@ -22,12 +21,11 @@ export default function SensorSprout({ value }: { value?: number }) {
         className="sprout"
         style={
           {
-            "--sprout-opacity": 0.3 + level * 0.7,
-            "--sprout-scale": 0.35 + level * 0.65,
+            "--sprout-opacity": 0.15 + level * 0.85,
           } as LevelStyle
         }
         role="img"
-        aria-label={`새싹 성장 ${growth}%`}
+        aria-label={`새싹 선명도 ${clarity}%`}
       >
         <svg viewBox="0 0 320 320" aria-hidden="true">
           <path className="sprout-stem" d="M160 264 C158 220 164 174 184 122" />
