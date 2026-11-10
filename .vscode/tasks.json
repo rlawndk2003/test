@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Open current sketch in Arduino IDE",
+      "type": "process",
+      "command": "open",
+      "args": [
+        "-a",
+        "/Applications/Arduino IDE.app",
+        "${file}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never"
+      }
+    }
+  ]
+}
